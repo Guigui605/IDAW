@@ -3,39 +3,33 @@
     <head>
         <meta charset="utf-8">
         <title>Mon CV</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <h1 class="faireUnTraitEnBas">Guilhem MAIRE - CV</h1>
         <nav class="menu">
             <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="cv.html">CV</a></li>
-            <li><a href="hobbies.html">Hobbies</a></li>
+            <li class="choixDeMenu"><a class="notUnderlined" href="index.html">Accueil</a></li>
+            <li class="choixDeMenu selected"><a class="notUnderlined" href="cv.html">CV</a></li>
+            <li class="choixDeMenu"><a class="notUnderlined" href="hobbies.html">Hobbies</a></li>
             </ul>
         </nav>
-
-        <h1>Guilhem Maire</h1>
-        <h2>Etudiant à IMT Nord Europe</h2>
-        <h3>Formations</h3>
-        <p>Bac maths physique au lycée Notre Dame "les oiseaux"
-            <br>
-            Ecole d'ingénieurs IMT Nord Europe
-        </p>
-        <h3>Expériences</h3>
-        <p>
-            Stage automatisation de processus chez CHEMDOC Water Technologies
-            <br>
-            Stage test informatique chez Stellantis
-            <br>
-            Stage opérateur de ligne chez Stellantis
-        </p>
-
-        <h3>Compétences</h3>
-        <p>langages de programmation C, python, javascript, java
-            <br>
-            <s>html</s> (c'est faux je suis nul)
-            <br>
-            anglais et <s>allemand</s>
-        </p>
+        <div class="CV">
+            <h1 class="faireUnTraitEnBas">Guilhem MAIRE</h1>
+            <h2>Etudiant à IMT Nord Europe</h2>
+            <div class="contenuDePage">
+                <h3>Formations</h3>
+                <p>Bac maths physique au lycée Notre Dame "les oiseaux"<br>Ecole d'ingénieurs IMT Nord Europe</p>
+            </div>
+            <div class="contenuDePage">
+                <h3>Expériences</h3>
+                <p>Stage automatisation de processus chez CHEMDOC Water Technologies<br>Stage test informatique chez Stellantis<br>Stage opérateur de ligne chez Stellantis</p>
+            </div>
+            <div class="contenuDePage">
+                <h3>Compétences</h3>
+                <p>Langages informatiques : C, python, javascript, java, <s>html</s>(c'est faux)<br>Langues : Anglais (965 au TOEIC), <s>Allemand</s></p>
+            </div>
+        </div>
         
     </body>
 </html>

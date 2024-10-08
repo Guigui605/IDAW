@@ -1,0 +1,66 @@
+.menu{
+    display: flex;
+    padding: 10px;
+    margin-top: 20px;
+    flex-direction: row;
+    max-width: 100%;
+    justify-content: space-around;
+    margin-bottom: 40px;
+    background-color: lightgray;
+}
+
+.choixDeMenu{
+    display: inline-flex;
+}
+
+.contenuDePage{
+    display: inline-flex;
+    padding: 10px;
+    flex-direction: column;
+    background-color: beige;
+    padding-left: 20%;
+}
+
+.page{
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.CV{
+    border: 3px solid black;
+    display: flex;
+    margin-left: 20%;
+    flex-direction: column;
+}
+
+ul{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.selected{
+    background-color: darkgray;
+}
+
+.notUnderlined{
+    text-decoration: none;
+}
+
+h1{
+    padding-left: 20px;
+}
+
+h2{
+    padding-left: 20px;
+}
+
+.faireUnTraitEnBas{
+    border-bottom: 3px solid black;
+}
+
+p{
+    padding-left: 40px;
+    line-height: 140%;
+}
