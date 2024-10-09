@@ -3,7 +3,7 @@
         
         <?php 
             require_once("menu.php");
-            renderMenuToHtml("index");
+            renderMenuToHtml("infos-techniques");
         ?>
         
         <p>On va couvrir ici les infos techniques de mon site.</p>
