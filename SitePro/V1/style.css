@@ -6,7 +6,7 @@
     max-width: 100%;
     justify-content: space-around;
     margin-bottom: 40px;
-    background-color: lightgray;
+    background-color: gray;
 }
 
 .choixDeMenu{
@@ -41,7 +41,7 @@ ul{
 }
 
 .selected{
-    background-color: darkgray;
+    background-color: lightgray;
 }
 
 .notUnderlined{
