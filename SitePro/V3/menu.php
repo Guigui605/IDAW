@@ -17,8 +17,15 @@
             }
             echo("><a class=\"notUnderlined\" href=\"index.php?page=$pageId&lang=$langue\">$pageParameters[0]</a></li>");
         }
+        if($langue === 'fr'){
+            echo("<li class=\"choixDeMenu\"><a class=\"notUnderlined\" href=\"index.php?page=$currentPageId&lang=en\">fr/en</a></li>");
+        }
+        else {
+            echo("<li class=\"choixDeMenu\"><a class=\"notUnderlined\" href=\"index.php?page=$currentPageId&lang=fr\">fr/en</a></li>");
+        }
         echo("</ul>");
         echo("</nav>");
+        
     }
 
 ?>
