@@ -9,6 +9,8 @@
 
 .choixDeMenu{
     display: inline-flex;
+    font-family: 'comic sans ms';
+    color: black;
 }
 
 .contenuDePage{
@@ -48,10 +50,12 @@ ul{
 
 h1{
     padding-left: 20px;
+    font-family: 'comic sans ms';
 }
 
 h2{
     padding-left: 20px;
+    font-family: 'comic sans ms';
 }
 
 .faireUnTraitEnBas{
@@ -61,4 +65,9 @@ h2{
 p{
     padding-left: 40px;
     line-height: 140%;
+    font-family: 'comic sans ms';
+}
+
+a{
+    color: black;
 }

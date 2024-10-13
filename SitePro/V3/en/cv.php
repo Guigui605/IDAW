@@ -1,4 +1,4 @@
-<h1 class="faireUnTraitEnBas">Mon CV</h1>
+<h1 class="faireUnTraitEnBas">My CV</h1>
 
 <div class="CV">
     <h1 class="faireUnTraitEnBas">Guilhem MAIRE</h1>

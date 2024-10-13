@@ -1,2 +1,2 @@
-<h1 class="faireUnTraitEnBas">Infos Techniques</h1>
-<p>On va couvrir ici les infos techniques de mon site.</p>
+<h1 class="faireUnTraitEnBas">Technical Informations</h1>
+<p>We'll cover here the technical informations of my website.</p>
