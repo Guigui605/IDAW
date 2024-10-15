@@ -29,10 +29,9 @@
         echo("<tr><td>ID :     </td><td>Name :      </td><td>email :</td></tr>");
         foreach($response as $index => $row){
             echo("<tr>");
-            forEach($row as $indexColumn => $value){
+            foreach($row as $indexColumn => $value){
                 echo("<td>$value</td>");
             }
             echo("</tr>");
         }
-
     }
