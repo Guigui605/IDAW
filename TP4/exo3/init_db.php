@@ -1,5 +1,5 @@
 <?php
-    require_once("config.php");
+    require_once("../config.php");
     $connectionString = "mysql:host=". _MYSQL_HOST;
     if(defined('_MYSQL_PORT'))
         $connectionString .= ";port=". _MYSQL_PORT;
@@ -13,10 +13,10 @@
     catch (PDOException $erreur) {
         echo 'Erreur : '.$erreur->getMessage();
     }
-    $pdo->prepare(file_get_contents("create_db.sql"));
-    $pdo->execute();
+    $contents = file_get_contents("create_db.sql");
+    $pdo->exec($contents);
     echo("<p>");
-        echo(file_get_contents("create_db.sql"));
+        echo("base de donnéees bien créée");
     echo("</p>");
-    header("Loading:TP4/users.php");
+    header("Location: ../users.php");
 ?>
