@@ -39,7 +39,7 @@
             exit(json_encode("Could not modify user. Please check your arguments."));
         }
         else{
-            $requete = $db->query("SELECT FROM `users` WHERE `email`='".$email."'");
+            $requete = $db->query("SELECT * FROM `users` WHERE `email`='".$email."'");
             $res = $requete->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
             return $res;
@@ -49,7 +49,7 @@
     function getInfoById($db,$id){
         $req = "SELECT * FROM `users` WHERE `id`=".$id;
         $requete = $db->query($req);
-        $res = $requete->fetchAll(PDO::FETCH_OBJ);
+        $res = $requete->fetch(PDO::FETCH_OBJ);
         return $res;
     }
 
@@ -67,8 +67,9 @@
 
     function delete_user($db, $id){
         $user = getInfoById($db, $id);
+        print_r($user);
         $requete = $db->query("DELETE FROM `users` WHERE `id`='$id'");
-        return "The user ".$user['name']." with email ".$user['email']." has been deleted";
+        return "The user : ".$user->name." with email : ".$user->email." has been deleted";
     }
 
     function verifParametres($tableau){
@@ -123,29 +124,29 @@
                 exit(json_encode("Missing argument to create new entry in database."));
             }
         case 'PUT':
-            $parameters = json_decode(file_get_contents('php://input'));
+            $parameters = json_decode(file_get_contents('php://input'),true);
             if(!isset($parameters['id'])){
                 http_response_code(400);
                 exit(json_encode("Tried to modify without ID."));
             }
             if(!isset($parameters['email'])){
-                $parameters['email']= getInfoById($pdo, $parameters['id'])['email'];
+                $parameters['email']= getInfoById($pdo, $parameters['id'])->email;
             }
             if(!isset($parameters['name'])){
-                $parameters['name']= getInfoById($pdo, $parameters['id'])['name'];
+                $parameters['name']= getInfoById($pdo, $parameters['id'])->name;
             }
             $result = modify_user($pdo, $parameters['name'], $parameters['email'], $parameters['id']);
             setHeaders();
             exit(json_encode($result));
         case 'DELETE':
-            $parameters = json_decode(file_get_contents('php://input'));
+            $parameters = json_decode(file_get_contents('php://input'),true);
             if(!isset($parameters['id'])){
                 http_response_code(400);
                 setHeaders();
                 exit(json_encode("Tried to delete without giving an ID."));
             }
             else{
-                $result = delete_user();
+                $result = delete_user($pdo, $parameters['id']);
                 setHeaders();
                 exit(json_encode($result));
             }
@@ -153,4 +154,3 @@
             http_response_code(501);
             exit(-1);
     }
-
