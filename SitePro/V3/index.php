@@ -21,6 +21,9 @@
     $pageToInclude = $lang . '/' . $currentPageId . ".php";
     if(is_readable($pageToInclude))
         require_once($pageToInclude);
+    else if(is_readable($lang.'/'.$currentPageId.'.html')){
+        require_once($lang.'/'.$currentPageId.'.html');
+    }
     else
         require_once("error.php");
 ?>

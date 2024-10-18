@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <title>tabletest</title>
+    <style>
+        body{ margin-top: 5em; }
+        .table {
+        margin-top: 100px;
+        margin-bottom: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">email</th>
+            </tr>
+        </thead>
+        <tbody id="studentsTableBody">
+        </tbody>
+    </table>
+    <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
+        <div class="form-group row">
+            <label for="inputNom" class="col-sm-2 col-form-label">Nom*</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="inputNom" >
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail" class="col-sm-2 col-form-label">Email*</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="inputEmail" >
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <span class="col-sm-2"></span>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        function onFormSubmit() {
+            event.preventDefault();
+            let nom = $("#inputNom").val();
+            let email = $("#inputEmail").val();
+            let requeteTest = $.ajax({
+                url:"http://localhost/IDAW/TP4/API/users.php",
+                method:"GET",
+                dataType:"json"
+            });
+            requeteTest.done(function(data){
+                //let data = JSON.parse(msg);
+                for(let i = 0; i< data.length; i++){
+                    console.log("id : ",data[i]['id']);
+                    console.log("name : ",data[i]['name']);
+                    console.log("email : ",data[i]['email']);
+                }
+            });
+            requeteTest.fail(window.alert("failed"));
+            if(nom && email){
+                let request = $.ajax({
+                    url:"../../TP4/API/users.php",
+                    method:"POST",
+                    dataType:"json",
+                    data:`{"name":"${nom}","email":"${email}"}`,
+                });
+                request.done(function(data){
+                    //let data = JSON.parse(msg);
+                    if(data['id']&&data['name']&&data['email']){
+                        let id = data['id'];
+                        let name = data['name'];
+                        let mail = data['email'];
+                        $("#studentsTableBody").append(`<tr><td>${id}<td>${name}</td><td>${mail}</td></tr>`);
+                    }
+                });
+                request.fail(function(msg){
+                    window.alert("request failed : ",msg);
+                });
+            }
+            else{
+                window.alert("Vous devez renseigner le nom et l'email avant de submit le formulaire.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -6,7 +6,8 @@
             'cv' => array('Cv', 'Cv'),
             'hobbies' => array('Hobbies', 'Hobbies'),
             'infos-techniques' =>array('Infos Techniques', 'Technical Informations'),
-            'contact' => array('Contact', 'Contact')
+            'contact' => array('Contact', 'Contact'),
+            'jscrud' => array('Jscrud', 'Jscrud')
         );
         echo("<nav class=\"menu\">");
         echo("<ul>");
