@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <title>tabletest</title>
+    <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" type="text/css" media="screen" title="default" charset="utf-8">
     <style>
         body{ margin-top: 5em; }
         .table {
@@ -48,38 +49,99 @@
         </div>
     </form>
     <script>
-        function onFormSubmit() {
-            event.preventDefault();
-            let nom = $("#inputNom").val();
-            let email = $("#inputEmail").val();
+        $(document).ready(onPageLoad());
+        function onPageLoad(){
             let requeteTest = $.ajax({
-                url:"http://localhost/IDAW/TP4/API/users.php",
+                url:"../../TP4/API/users.php",
                 method:"GET",
                 dataType:"json"
             });
             requeteTest.done(function(data){
-                //let data = JSON.parse(msg);
                 for(let i = 0; i< data.length; i++){
-                    console.log("id : ",data[i]['id']);
-                    console.log("name : ",data[i]['name']);
-                    console.log("email : ",data[i]['email']);
+                    let id = data[i]['id'];
+                    let name = data[i]['name'];
+                    let mail = data[i]['email'];
+                    $("#studentsTableBody").append(`<tr><td>${id}<td>${name}</td><td>${mail}</td><td><button class="edit" onclick="editUser(this)">Edit</button></td><td><button class="delete" onclick="deleteUser(this)">Delete</button></td></tr>`);
                 }
             });
-            requeteTest.fail(window.alert("failed"));
+            requeteTest.fail(function(){window.alert("Erreur lors du chargement de la page.")});
+        }
+
+        function editUser(button) {
+            let row = $(button).closest('tr');
+            let cells = row.find('td');
+
+            // Remplace chaque cellule par un champ input contenant la valeur actuelle
+            cells.eq(1).html(`<input type='text' value='${cells.eq(1).text()}' />`);
+            cells.eq(2).html(`<input type='text' value='${cells.eq(2).text()}' />`);
+
+            // Remplace le bouton "Edit" par "Save"
+            $(button).replaceWith(`<button onclick="saveUser(this)">Save</button>`);
+        }
+
+        function deleteUser(button){
+            let row = $(button).closest('tr');
+            let cells = row.find('td');
+            let id = cells.eq(0).text();
+
+            let jsonData = `{"id":"${id}"}`;
+
+            let request = $.ajax({
+                url:"../../TP4/API/users.php",
+                method:"DELETE",
+                "content-type":"application/json",
+                data: jsonData
+            });
+
+            $(button).closest('tr').remove();
+        }
+
+        function saveUser(button){
+            let row = $(button).closest("tr");
+            let cells = row.find('td');
+            let id = cells.eq(0).text();
+            let newName = cells.eq(1).find('input').val();
+            let newEmail = cells.eq(2).find('input').val();
+
+            let jsonData = `{"id":"${id}","name":"${newName}","email":"${newEmail}"}`;
+
+            let request = $.ajax({
+                url:"../../TP4/API/users.php",
+                method:"PUT",
+                "content-type":"application/json",
+                data: jsonData
+            });
+            request.done(function(response){
+                cells.eq(0).html(response[0]['id']);
+                cells.eq(1).html(response[0]['name']);
+                cells.eq(2).html(response[0]['email']);
+            });
+            $(button).replaceWith(`<button onclick="editUser(this)">Edit</button>`);
+        }
+
+        function onFormSubmit() {
+            event.preventDefault();
+            let nom = $("#inputNom").val();
+            let email = $("#inputEmail").val();
+            let jsonData = `{"name":"${nom}","email":"${email}"}`;
+            
+
             if(nom && email){
                 let request = $.ajax({
                     url:"../../TP4/API/users.php",
                     method:"POST",
-                    dataType:"json",
-                    data:`{"name":"${nom}","email":"${email}"}`,
+                    "content-type":"application/json",
+                    data: jsonData
                 });
                 request.done(function(data){
-                    //let data = JSON.parse(msg);
-                    if(data['id']&&data['name']&&data['email']){
-                        let id = data['id'];
-                        let name = data['name'];
-                        let mail = data['email'];
-                        $("#studentsTableBody").append(`<tr><td>${id}<td>${name}</td><td>${mail}</td></tr>`);
+                    for(let i = 0;i<data.length;i++){
+                        if(data[i]['id']&&data[i]['name']&&data[i]['email']){
+                            console.log("on a bien les données");
+                            let id = data[i]['id'];
+                            let name = data[i]['name'];
+                            let mail = data[i]['email'];
+                            $("#studentsTableBody").append(`<tr><td>${id}<td>${name}</td><td>${mail}</td><td><button class="edit" onclick="editUser(this)">Edit</button></td><td><button class="delete" onclick="deleteUser(this)">Delete</button></td></tr>`);
+                        }
                     }
                 });
                 request.fail(function(msg){

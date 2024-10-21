@@ -1,7 +1,7 @@
 <?php
     require_once("init_pdo.php");
     function get_users($db){
-        $sql = "SELECT * FROM `users`";
+        $sql = "SELECT * FROM `users` ORDER BY `id`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
@@ -60,7 +60,7 @@
     }
 
     function getInfoByName($db, $name){
-        $requete = $db->query("SELECT * FROM `users` WHERE `name`='$name'");
+        $requete = $db->query("SELECT * FROM `users` ORDER BY `id` WHERE `name`='$name'");
         $res = $requete->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
@@ -112,16 +112,16 @@
         case 'POST':
             //verifParametres($_POST);
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-            
-            if(isset($_POST['name'])&&isset($_POST['email'])){
-                $result = create_user($pdo,$_POST['name'],$_POST['email']);
+            $parameters = json_decode(file_get_contents('php://input'),true);
+            if(isset($parameters['name'])&&isset($parameters['email'])){
+                $result = create_user($pdo,$parameters['name'],$parameters['email']);
                 setHeaders();
                 exit(json_encode($result));
             }
             else{
                 http_response_code(400);
                 setHeaders();
-                exit(json_encode("Missing argument to create new entry in database."));
+                exit(json_encode("Missing argument to create new entry in database. POST :",print_r($parameters)));
             }
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);
